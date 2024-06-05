@@ -1,5 +1,5 @@
-// import { useDispatch } from "react-redux";
-// import { addContact } from "../../redux/contactsSlice";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsOps";
 import { Formik, Field, Form } from "formik";
 import { ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -11,7 +11,6 @@ export default function ContactForm() {
   const numberId = useId();
 
   // ====================== HANDLE VALIDATION
-
   const AddContactSchema = Yup.object().shape({
     name: Yup.string()
       .min(3, "Too Short!")
@@ -21,8 +20,10 @@ export default function ContactForm() {
   });
 
   // ======================= HANDLE SUBMIT
+  const dispatch = useDispatch();
 
   function handleSubmit(values, actions) {
+    dispatch(addContact(values));
     actions.resetForm();
   }
 
